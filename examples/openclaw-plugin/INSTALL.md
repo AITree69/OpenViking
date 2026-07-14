@@ -364,3 +364,15 @@ bash examples/openclaw-plugin/upgrade_scripts/cleanup-memory-openviking.sh
 ```
 
 See also: [INSTALL-ZH.md](./INSTALL-ZH.md), [INSTALL-AGENT.md](./INSTALL-AGENT.md), and [docs/openviking-tos-install-guide.md](./docs/openviking-tos-install-guide.md).
+
+## Enabling Multimodal (Image / Audio / Video / PDF)
+
+OpenClaw itself has no image/audio/video tools — all multimodal parsing is delegated to OpenViking's parser modules. The end-to-end "from-scratch install + turn on multimodal" guide is in:
+
+**[docs/multimodal-deploy-guide-CN.md](./docs/multimodal-deploy-guide-CN.md)** (Chinese)
+
+Key points:
+
+- In OpenViking's `ov.conf`, set `embedding.dense.input: multimodal`, `parsers.image.enable_vlm: true`, and `parsers.video.enable_vlm_description: true`.
+- In the OpenClaw plugin, set `enableAddResourceTool: true` — without this, the agent cannot call `add_resource` to ingest multimodal files.
+- The `image_vectorization` field controls whether embedding uses just the VLM summary, the raw image, or both.

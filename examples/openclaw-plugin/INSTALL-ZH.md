@@ -403,3 +403,15 @@ bash examples/openclaw-plugin/upgrade_scripts/cleanup-memory-openviking.sh
 ```
 
 另见：[INSTALL.md](./INSTALL.md)、[INSTALL-AGENT.md](./INSTALL-AGENT.md) 和 [docs/openviking-tos-install-guide.md](./docs/openviking-tos-install-guide.md)。
+
+## 打开多模态（图像 / 音频 / 视频 / PDF）
+
+OpenClaw 客户端本身没有多模态能力，所有图像/音频/视频/PDF 都靠 OpenViking 的 parser 解析、向量化。完整的"从零部署 + 打开多模态"流程见：
+
+**[docs/multimodal-deploy-guide-CN.md](./docs/multimodal-deploy-guide-CN.md)**
+
+核心要点：
+
+- OpenViking `ov.conf` 里要配 `embedding.dense.input: multimodal` + `parsers.image.enable_vlm: true` + `parsers.video.enable_vlm_description: true`
+- OpenClaw 插件要 `enableAddResourceTool: true` agent 才能调 `add_resource` 把多模态文件喂给 OpenViking
+- 用 `image_vectorization` 段切换"只 embed 摘要" / "只 embed 图像" / "两者都 embed"
